@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 46" width="180" height="46">
+  <rect width="180" height="46" rx="4" fill="#0d6efd"/>
+  <text x="12" y="31" font-family="Segoe UI, sans-serif" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Great</text>
+  <text x="82" y="31" font-family="Segoe UI, sans-serif" font-size="22" font-weight="400" fill="#cce0ff" letter-spacing="-0.5">Kart</text>
+  <circle cx="165" cy="23" r="10" fill="#ffffff" opacity="0.15"/>
+  <path d="M159 19 h4 l2 8 h6 l2-6 h-9" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-green: #1a7a4a; /* আপনার প্রধান সবুজ কালার */
+        --hover-green: #155f39;   /* হোভার করার জন্য গাঢ় সবুজ */
+        --light-bg: #f7f8fa;
+    }
+
+    .btn-custom {
+        background-color: var(--primary-green) !important;
+        border-color: var(--primary-green) !important;
+        color: white !important;
+        border-radius: 50px; /* বাটন গোল করার জন্য */
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: var(--hover-green) !important;
+        transform: translateY(-2px);
+    }
+
+    .card-header-custom {
+        background-color: var(--primary-green) !important;
+        color: white !important;
+        border-radius: 16px 16px 0 0 !important;
+    }
+
+    .text-success-custom {
+        color: var(--primary-green) !important;
+    }
+    
+    .card-shadow {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border-radius: 16px;
+    }
+</style>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-shadow border-0">
+        <div class="card-header card-header-custom text-center py-3">
+          <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Create Account</h4>
+        </div>
+        <div class="card-body p-4 p-lg-5">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="id_first_name"><i class="fas fa-user text-success-custom"></i> First Name</label>
+                {{ form.first_name }}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="id_last_name"><i class="fas fa-user text-success-custom"></i> Last Name</label>
+                {{ form.last_name }}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_username"><i class="fas fa-at text-success-custom"></i> Username</label>
+              {{ form.username }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_email"><i class="fas fa-envelope text-success-custom"></i> Email</label>
+              {{ form.email }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_password"><i class="fas fa-lock text-success-custom"></i> Password</label>
+              {{ form.password }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_confirm_password"><i class="fas fa-lock text-success-custom"></i> Confirm Password</label>
+              {{ form.confirm_password }}
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-custom">Register Now</button>
+            </div>
+          </form>
+          
+          <hr class="my-4">
+          <p class="text-center mb-0 text-muted">
+            Already have an account? <a href="{% url 'accounts_login' %}" class="text-decoration-none fw-bold text-success-custom">Sign in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

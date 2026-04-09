@@ -1,0 +1,40 @@
+/* ========== home.css — Homepage-specific styles ========== */
+
+/* Hero banner section */
+.section-intro { background: #f0f4ff; }
+
+.intro-banner-wrap {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Popular products section */
+.section-name { background: #fff; }
+
+/* Row gap fix for product grid */
+.section-name .row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.section-name .row > [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Hover badge on cards */
+.card-product-grid { position: relative; }
+
+/* Optional: sale badge slot */
+.card-product-grid .badge-sale {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e63946;
+  color: #fff;
+  font-size: .72rem;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: .03em;
+}

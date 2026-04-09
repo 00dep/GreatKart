@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-green: #1a7a4a;
+        --hover-green: #155f39;
+        --bg-light: #f7f8fa;
+        --border-color: #e8eaed;
+    }
+
+    body {
+        background-color: var(--bg-light);
+    }
+
+    .checkout-section {
+        padding: 3rem 0 5rem;
+    }
+
+    .card-custom {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .card-header-custom {
+        background-color: var(--primary-green) !important;
+        color: white !important;
+        padding: 1.2rem;
+        border: none;
+    }
+
+    .card-header-custom h4, .card-header-custom h5 {
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #4b5563;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+        padding: 10px 15px;
+        transition: all 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 3px rgba(26, 122, 74, 0.1);
+    }
+
+    .btn-payment {
+        background-color: var(--primary-green) !important;
+        border: none;
+        color: white !important;
+        padding: 14px;
+        border-radius: 50px;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 1rem;
+        transition: all 0.3s;
+    }
+
+    .btn-payment:hover {
+        background-color: var(--hover-green) !important;
+        transform: translateY(-2px);
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 15px;
+    }
+
+    .summary-total {
+        border-top: 1px solid var(--border-color);
+        padding-top: 15px;
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-green);
+    }
+
+    .product-list-item {
+        background: #fdfdfd;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #f1f1f1;
+    }
+</style>
+
+<div class="container checkout-section">
+  <div class="row g-4">
+    
+    <div class="col-lg-8">
+      <div class="card card-custom">
+        <div class="card-header card-header-custom">
+          <h4><i class="fas fa-map-marker-alt me-2"></i> Billing Information</h4>
+        </div>
+        <div class="card-body p-4 p-lg-5">
+          <form method="post" action="{% url 'store:place_order' %}" novalidate>
+            {% csrf_token %}
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" name="phone" class="form-control" value="{{ user.phone_number }}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 1</label>
+              <input type="text" name="address_line_1" class="form-control" placeholder="Street name and house number" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 2 (Optional)</label>
+              <input type="text" name="address_line_2" class="form-control" placeholder="Apartment, suite, unit, etc.">
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">City</label>
+                <input type="text" name="city" class="form-control" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">State / Province</label>
+                <input type="text" name="state" class="form-control" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" name="country" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Order Note (Optional)</label>
+              <textarea name="order_note" class="form-control" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-payment">Continue to Payment <i class="fas fa-arrow-right ms-2"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-custom">
+        <div class="card-header card-header-custom" style="background-color: #333 !important;">
+          <h5><i class="fas fa-shopping-bag me-2"></i> Order Summary</h5>
+        </div>
+        <div class="card-body p-4">
+          
+          <div class="product-summary-list mb-4">
+            {% for cart_item in cart_items %}
+            <div class="product-list-item d-flex justify-content-between align-items-center">
+              <div>
+                <span class="fw-bold d-block" style="font-size: 14px;">{{ cart_item.product.name }}</span>
+                <small class="text-muted">Qty: {{ cart_item.quantity }}</small>
+              </div>
+              <span class="fw-bold text-dark">₹{{ cart_item.sub_total }}</span>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="summary-item">
+            <span>Subtotal:</span>
+            <span>₹{{ total }}</span>
+          </div>
+          
+          <div class="summary-item">
+            <span>Tax:</span>
+            <span>₹{{ tax }}</span>
+          </div>
+
+          <div class="summary-item">
+            <span>Shipping:</span>
+            <span class="text-success">Free</span>
+          </div>
+
+          <div class="summary-total">
+            <span>Total:</span>
+            <span>₹{{ grand_total }}</span>
+          </div>
+
+          <div class="mt-4 p-3 bg-light rounded text-center" style="border: 1px dashed #ccc;">
+            <p class="small text-muted mb-0"><i class="fas fa-shield-alt me-1"></i> 100% Secure Checkout</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

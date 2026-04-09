@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load mathfilters %} {% block content %}
+<style>
+    :root {
+        --primary-green: #1a7a4a;
+        --light-bg: #f7f8fa;
+        --border-color: #e8eaed;
+    }
+
+    body {
+        background-color: var(--light-bg);
+    }
+
+    .success-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .success-header {
+        background-color: var(--primary-green) !important;
+        color: white;
+        padding: 3rem 1rem;
+        text-align: center;
+    }
+
+    .success-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: scaleUp 0.5s ease-in-out;
+    }
+
+    @keyframes scaleUp {
+        0% { transform: scale(0); }
+        100% { transform: scale(1); }
+    }
+
+    .info-label {
+        color: #6b7280;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    .info-value {
+        color: #1c1c1e;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .order-table thead {
+        background-color: #f9fafb;
+    }
+
+    .order-table th {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: #4b5563;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .grand-total-row {
+        font-size: 1.2rem;
+        color: var(--primary-green);
+    }
+
+    .btn-continue {
+        background-color: var(--primary-green) !important;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-continue:hover {
+        background-color: #155f39 !important;
+        transform: translateY(-2px);
+    }
+
+    .btn-home {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card success-card">
+                <div class="success-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="fw-bold">Order Confirmed!</h2>
+                    <p class="mb-0 opacity-75">Thank you for your purchase. Your order has been received.</p>
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row mb-5 text-center text-md-start">
+                        <div class="col-md-3">
+                            <p class="info-label">Order Number</p>
+                            <p class="info-value">#{{ order_number }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info-label">Date</p>
+                            <p class="info-value">{{ order.created_at|date:"M d, Y" }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info-label">Payment Method</p>
+                            <p class="info-value">{{ payment.payment_method }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info-label">Transaction ID</p>
+                            <p class="info-value text-truncate">{{ transID }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4" style="background: #fdfdfd; border: 1px solid var(--border-color);">
+                                <h5 class="fw-bold mb-3"><i class="fas fa-truck me-2 text-success"></i>Shipping Address</h5>
+                                <p class="mb-1 fw-bold">{{ order.full_name }}</p>
+                                <p class="mb-1 text-muted">{{ order.full_address }}</p>
+                                <p class="mb-1 text-muted">{{ order.city }}, {{ order.state }}</p>
+                                <p class="mb-1 text-muted">{{ order.country }}</p>
+                                <p class="mb-0 text-muted"><i class="fas fa-phone-alt small me-1"></i> {{ order.phone }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-success border-0 h-100 d-flex align-items-center p-4 rounded-4">
+                                <div>
+                                    <h5 class="alert-heading fw-bold">Success!</h5>
+                                    <p class="mb-0">A confirmation email has been sent to <strong>{{ order.email }}</strong>. We will notify you once your items are shipped.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3">Order Items</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table order-table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-end">Price</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in ordered_products %}
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-dark">{{ item.product.name }}</span>
+                                    </td>
+                                    <td class="text-center">{{ item.quantity }}</td>
+                                    <td class="text-end">₹{{ item.product_price }}</td>
+                                    <td class="text-end fw-bold">₹{{ item.product_price|mul:item.quantity }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="border-top">
+                                <tr>
+                                    <td colspan="3" class="text-end text-muted">Subtotal</td>
+                                    <td class="text-end">₹{{ subtotal }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end text-muted">Tax</td>
+                                    <td class="text-end">₹{{ order.tax }}</td>
+                                </tr>
+                                <tr class="grand-total-row">
+                                    <td colspan="3" class="text-end fw-bold">Grand Total</td>
+                                    <td class="text-end fw-bold">₹{{ order.order_total }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
+                        <a href="{% url 'store:store' %}" class="btn btn-primary btn-continue">
+                            <i class="fas fa-shopping-cart me-2"></i>Continue Shopping
+                        </a>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-home">
+                            Go to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-4 text-muted small">Need help? <a href="#" class="text-success text-decoration-none">Contact Support</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

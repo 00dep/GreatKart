@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-ujbea9-6)$n+0zk7w$*y54c5dkp_z$j@vkw$wzsnjq_)(%*wg*'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['greatkart-hld2.onrender.com', 'localhost', '127.0.0.1']
 
@@ -76,11 +76,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'static_cdn',
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

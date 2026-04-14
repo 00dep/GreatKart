@@ -3,72 +3,69 @@
 {% block content %}
 
 <section class="section-intro padding-y-sm">
-  <div class="container">
-    <div style="position: relative; border-radius: 16px; overflow: hidden;">
-      <img src="{% static 'images/banners/banner.jpg' %}" 
-           style="width: 100%; height: 420px; object-fit: cover; display: block;" 
-           alt="GreatKart Banner">
-      
-      <!-- Dark overlay -->
-      <div style="
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-      "></div>
+    <div class="container">
+        <div style="position: relative; border-radius: 16px; overflow: hidden;">
+            <img src="{% static 'images/banners/banner.jpg' %}" 
+                 style="width: 100%; height: 420px; object-fit: cover; display: block;" 
+                 alt="GreatKart Banner">
+            
+            <div style="
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+            "></div>
 
-      <!-- Text -->
-      <div style="
-        position: absolute;
-        top: 50%;
-        left: 6%;
-        transform: translateY(-50%);
-      ">
-        <p style="color: #4ade80; font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">New Collection</p>
-        <h2 style="color: white; font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px;">
-          New Arrivals<br>2026
-        </h2>
-        <p style="color: rgba(255,255,255,0.8); font-size: 1rem; margin-bottom: 24px;">
-          Discover the latest trends
-        </p>
-        <a href="{% url 'store:store' %}" style="
-          background: #16a34a;
-          color: white;
-          padding: 12px 32px;
-          border-radius: 50px;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 15px;
-          display: inline-block;
-          transition: background 0.2s;
-        ">Shop Now →</a>
-      </div>
-
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: 6%;
+                transform: translateY(-50%);
+            ">
+                <p style="color: #4ade80; font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">New Collection</p>
+                <h2 style="color: white; font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px;">
+                    New Arrivals<br>2026
+                </h2>
+                <p style="color: rgba(255,255,255,0.8); font-size: 1rem; margin-bottom: 24px;">
+                    Discover the latest trends
+                </p>
+                <a href="{% url 'store:store' %}" style="
+                    background: #16a34a;
+                    color: white;
+                    padding: 12px 32px;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 15px;
+                    display: inline-block;
+                ">Shop Now →</a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <section class="section-name padding-y-sm">
-  <div class="container">
-    <header class="section-heading">
-      <a href="{% url 'store:store' %}" class="btn btn-outline-primary float-right">See all</a>
-      <h3 class="section-title">Popular products</h3>
-    </header>
-    <div class="row">
-      {% for product in products %}
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="{{ product.get_url }}" class="img-wrap">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-          </a>
-          <figcaption class="info-wrap">
-            <a href="{{ product.get_url }}" class="title">{{ product.name }}</a>
-            <div class="price mt-1">${{ product.price }}</div>
-          </figcaption>
+    <div class="container">
+        <header class="section-heading">
+            <a href="{% url 'store:store' %}" class="btn btn-outline-primary float-right">See all</a>
+            <h3 class="section-title">Popular products</h3>
+        </header>
+
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card card-product-grid">
+                    <a href="{{ product.get_url }}" class="img-wrap">
+                        <img src="{{ product.images.url }}" alt="{{ product.product_name }}">
+                    </a>
+                    <figcaption class="info-wrap">
+                        <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+                        <div class="price mt-1">${{ product.price }}</div>
+                    </figcaption>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-      </div>
-      {% endfor %}
     </div>
-  </div>
 </section>
 
 {% endblock content %}

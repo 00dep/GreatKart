@@ -1,0 +1,1 @@
+- [x] Step 1: Edit templates/includes/navbar.html ✅&#10;- [x] Step 2: Welcome dropdown left shift ✅&#10;- [x] Step 3: Main navbar row justified ✅

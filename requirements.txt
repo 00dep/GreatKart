@@ -1,5 +1,7 @@
-Django==6.0.3
+django>=5.0
 gunicorn==22.0.0
 stripe==10.8.0
 Pillow==11.1.0
-whitenoise
+whitenoise==6.7.0
+asgiref>=3.8.1
+sqlparse>=0.5.1

@@ -141,11 +141,17 @@ STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles',
 ]
 
+# Static and Media files configuration
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Allowed Hosts configuration for Render and Local
+ALLOWED_HOSTS = ['greatkart-hld2.onrender.com', 'localhost', '127.0.0.1']
+
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Authentication configuration
 LOGIN_URL = 'accounts_login'
 LOGIN_REDIRECT_URL = 'home'
-ALLOWED_HOSTS = 'greatkart-hld2.onrender.com', 'localhost', '127.0.0.1'

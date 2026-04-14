@@ -148,3 +148,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'accounts_login'
 LOGIN_REDIRECT_URL = 'home'
+ALLOWED_HOSTS = 'greatkart-hld2.onrender.com', 'localhost', '127.0.0.1'

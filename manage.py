@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
@@ -44,4 +44,3 @@ def main():
 
 if __name__ == '__main__':
     main()
->>>>>>> 75f8312f58a435e4b43de50c7247e6ba98cfa299

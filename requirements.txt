@@ -1,1 +1,0 @@
-Django==6.0.3&#10;stripe&#10;Pillow==11.1.0&#10;crispy-bootstrap5

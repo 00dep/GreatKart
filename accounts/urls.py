@@ -5,6 +5,8 @@ from .forms import StyledAuthenticationForm
 
 urlpatterns = [
     path('register/', views.register, name='accounts_register'),
+    path('profile/', views.profile, name='accounts_profile'),
+    path('my-orders/', views.my_orders, name='accounts_my_orders'),
 
     path(
         'login/',

@@ -8,10 +8,10 @@ class Cart(models.Model):
         return self.cart_id
 
 class CartItem(models.Model):
-    user = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey('store.Product', on_delete=models.CASCADE)
     variations = models.ManyToManyField('store.Variation', blank=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)  # ← null=True যোগ করো
     quantity = models.IntegerField()
     is_active = models.BooleanField(default=True)
 

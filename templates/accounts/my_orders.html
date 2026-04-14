@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-green: #463cff;
+        --soft-bg: #f8fafc;
+        --border-soft: #f1f5f9;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+    }
+
+    body {
+        background-color: var(--soft-bg);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .order-section {
+        padding: 4rem 0 6rem;
+    }
+
+    .section-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .section-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.25rem;
+        color: var(--text-main);
+        font-weight: 700;
+    }
+
+    /* Modern Glassmorphism Card */
+    .aesthetic-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    .table {
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    .table thead th {
+        background: #fdfdfd;
+        padding: 20px 24px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border-soft);
+        font-weight: 600;
+    }
+
+    .table tbody td {
+        padding: 24px;
+        border-bottom: 1px solid var(--border-soft);
+        color: var(--text-main);
+        font-size: 15px;
+    }
+
+    .order-num-pill {
+        background: #f0fdf4;
+        color: var(--primary-green);
+        padding: 6px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        display: inline-block;
+    }
+
+    /* Soft Animated Badges */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        gap: 6px;
+    }
+
+    .status-completed {
+        background-color: #dcfce7;
+        color: #15803d;
+    }
+
+    .status-pending {
+        background-color: #fef9c3;
+        color: #a16207;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .dot-completed { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .dot-pending { background: #eab308; box-shadow: 0 0 8px #eab308; }
+
+    .total-amount {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .btn-view {
+        color: var(--text-muted);
+        transition: 0.2s;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .btn-view:hover {
+        background: #f1f5f9;
+        color: var(--primary-green);
+    }
+
+    /* Empty State Aesthetic */
+    .empty-container {
+        padding: 6rem 2rem;
+        text-align: center;
+    }
+
+    .empty-illustration {
+        width: 120px;
+        height: 120px;
+        background: #fff;
+        border-radius: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        font-size: 3rem;
+        color: #cbd5e1;
+        box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
+    }
+
+    .btn-primary-aesthetic {
+        background: var(--primary-green);
+        color: white;
+        border: none;
+        padding: 14px 36px;
+        border-radius: 16px;
+        font-weight: 600;
+        box-shadow: 0 10px 20px -5px rgba(26, 122, 74, 0.3);
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary-aesthetic:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px -5px rgba(26, 122, 74, 0.4);
+        color: white;
+    }
+</style>
+
+<section class="order-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>My Orders</h2>
+            <p class="text-muted">Track and manage your recent purchases</p>
+        </div>
+
+        {% if orders %}
+        <div class="aesthetic-card">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Order Details</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>
+                                <span class="order-num-pill">#{{ order.order_number }}</span>
+                            </td>
+                            <td>
+                                <div class="fw-medium">{{ order.created_at|date:"d M Y" }}</div>
+                                <small class="text-muted">{{ order.created_at|time:"h:i A" }}</small>
+                            </td>
+                            <td>
+                                <span class="total-amount">${{ order.order_total }}</span>
+                            </td>
+                            <td>
+                                {% if order.is_ordered %}
+                                    <div class="status-badge status-completed">
+                                        <span class="status-dot dot-completed"></span>
+                                        Completed
+                                    </div>
+                                {% else %}
+                                    <div class="status-badge status-pending">
+                                        <span class="status-dot dot-pending"></span>
+                                        Pending
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="btn-view" title="View Details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="aesthetic-card empty-container">
+            <div class="empty-illustration">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h3 class="fw-bold mb-2">No orders yet</h3>
+            <p class="text-muted mb-4">You haven't placed any orders. Start exploring our store today!</p>
+            <a href="{% url 'store:store' %}" class="btn-primary-aesthetic">Start Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ujbea9-6)$n+0zk7w$*y54c5dkp_z$j@vkw$wzsnjq_)(%*wg*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'localhost:8000']
 
 
 # Application definition
@@ -84,9 +84,10 @@ LOGIN_URL = 'accounts_login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
-# Stripe settings
-STRIPE_PUBLISHABLE_KEY = 'pk_test_your_publishable_key_here'  # Replace with your Stripe publishable key
-STRIPE_SECRET_KEY = 'sk_test_your_secret_key_here'  # Replace with your Stripe secret key
+# Stripe settings (TODO: Get real keys)
+# STRIPE_PUBLISHABLE_KEY = 'pk_test_your_publishable_key_here'
+
+# STRIPE_SECRET_KEY = 'sk_test_your_secret_key_here'  # Replace with your Stripe secret key
 STRIPE_WEBHOOK_SECRET = 'whsec_your_webhook_secret_here'  # For webhooks
 
 # Database
@@ -144,3 +145,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'accounts_login'
+LOGIN_REDIRECT_URL = 'home'

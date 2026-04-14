@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-green: #564dff;
+        --soft-bg: #f8fafc;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --card-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background-color: var(--soft-bg);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .profile-section {
+        padding: 5rem 0;
+    }
+
+    .profile-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: none;
+        border-radius: 24px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, var(--primary-green), #2d9d65);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        background: white;
+        color: var(--primary-green);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 auto 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .profile-body {
+        padding: 2.5rem;
+    }
+
+    .info-group {
+        display: flex;
+        align-items: center;
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        background: #fdfdfd;
+        border-radius: 16px;
+        border: 1px solid #f1f5f9;
+        transition: 0.2s;
+    }
+
+    .info-group:hover {
+        background: #fff;
+        border-color: var(--primary-green);
+        transform: translateX(5px);
+    }
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        background: #f0fdf4;
+        color: var(--primary-green);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    .info-value {
+        font-size: 1.05rem;
+        color: var(--text-main);
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .profile-footer {
+        padding: 1.5rem;
+        text-align: center;
+        background: #f9fafb;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-edit-profile {
+        background: var(--primary-green);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .btn-edit-profile:hover {
+        background: #155f39;
+        color: white;
+        box-shadow: 0 5px 15px rgba(26, 122, 74, 0.3);
+    }
+</style>
+
+<section class="profile-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar-circle">
+                            {{ user.first_name|first|upper }}
+                        </div>
+                        <h3 class="fw-bold mb-1">{{ user.first_name }} {{ user.last_name }}</h3>
+                        <p class="mb-0 opacity-75">Member since {{ user.date_joined|date:"M Y" }}</p>
+                    </div>
+
+                    <div class="profile-body">
+                        <div class="info-group">
+                            <div class="info-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <p class="info-label">Full Name</p>
+                                <p class="info-value">{{ user.first_name }} {{ user.last_name }}</p>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="info-label">Email Address</p>
+                                <p class="info-value">{{ user.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <div class="info-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <p class="info-label">Phone Number</p>
+                                <p class="info-value">{{ user.phone_number|default:"Not Provided" }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-footer">
+                        <a href="#" class="btn-edit-profile">
+                            <i class="fas fa-edit me-2"></i>Edit Profile
+                        </a>
+                    </div>
+                </div>
+                
+                <p class="text-center mt-4">
+                    <a href="{% url 'home' %}" class="text-decoration-none text-muted small">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Home
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

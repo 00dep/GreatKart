@@ -25,14 +25,12 @@ def store(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
 
-    # Search
     keyword = request.GET.get('keyword')
     if keyword:
         products = products.filter(name__icontains=keyword)
 
     product_count = products.count()
 
-    # Pagination
     paginator = Paginator(products, 2)
     page = request.GET.get('page')
     try:
@@ -112,7 +110,6 @@ def checkout(request, total=0, quantity=0, cart_items=None):
 def place_order(request, total=0, quantity=0):
     current_user = request.user
 
-    # Prefer user cart items, but fall back to session cart items if needed.
     cart_items = CartItem.objects.filter(user=current_user, is_active=True)
     if not cart_items.exists():
         try:
@@ -134,7 +131,6 @@ def place_order(request, total=0, quantity=0):
     grand_total = total + tax
 
     if request.method == 'POST':
-        # Store all the billing information inside Order table
         data = Order()
         data.user = current_user
         data.first_name = request.POST.get('first_name')
@@ -151,12 +147,12 @@ def place_order(request, total=0, quantity=0):
         data.tax = tax
         data.ip = request.META.get('REMOTE_ADDR')
         data.save()
-        # Generate order number
+
         yr = int(datetime.date.today().strftime('%Y'))
         dt = int(datetime.date.today().strftime('%d'))
         mt = int(datetime.date.today().strftime('%m'))
         d = datetime.date(yr, mt, dt)
-        current_date = d.strftime("%Y%m%d")  # 20210305
+        current_date = d.strftime("%Y%m%d")
         order_number = current_date + str(data.id)
         data.order_number = order_number
         data.save()
@@ -176,9 +172,7 @@ def place_order(request, total=0, quantity=0):
 
 
 def payments(request):
-    # Get the order
     order = Order.objects.get(user=request.user, is_ordered=False)
-    # Store transaction details inside Payment model
     payment = Payment(
         user=request.user,
         payment_id=request.POST.get('payment_id'),
@@ -191,7 +185,6 @@ def payments(request):
     order.is_ordered = True
     order.save()
 
-    # Move the cart items to Order Product table
     cart_items = CartItem.objects.filter(user=request.user)
 
     for item in cart_items:
@@ -211,15 +204,12 @@ def payments(request):
         orderproduct.variations.set(product_variation)
         orderproduct.save()
 
-    # Reduce the quantity of the sold products
     product = Product.objects.get(id=item.product_id)
     product.stock -= item.quantity
     product.save()
 
-    # Clear cart
     CartItem.objects.filter(user=request.user).delete()
 
-    # Send order received email to customer
     mail_subject = 'Thank you for your order!'
     message = render_to_string('orders/order_received_email.html', {
         'user': request.user,
@@ -229,7 +219,6 @@ def payments(request):
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
 
-    # Send order number and transaction id back to sendData method via JsonResponse
     data = {
         'order_number': order.order_number,
         'transID': payment.payment_id,
@@ -240,12 +229,9 @@ def payments(request):
 @login_required(login_url='accounts_login')
 def create_checkout_session(request):
     if request.method == 'POST':
-        # Get the order
         order = Order.objects.get(user=request.user, is_ordered=False)
-        # Set your secret key
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        # Create a checkout session
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card', 'upi'],
             line_items=[
@@ -255,7 +241,7 @@ def create_checkout_session(request):
                         'product_data': {
                             'name': f'Order #{order.order_number}',
                         },
-                        'unit_amount': int(order.order_total * 100),  # Amount in paisa
+                        'unit_amount': int(order.order_total * 100),
                     },
                     'quantity': 1,
                 },

@@ -15,9 +15,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'cloudinary_storage',
+    'cloudinary_storage', # এটি আনকমেন্ট করা হয়েছে
     'django.contrib.staticfiles',
-    # 'cloudinary',
+    'cloudinary', # এটি আনকমেন্ট করা হয়েছে
     'category',
     'accounts',
     'store',
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # এটি অবশ্যই লাগবে রেন্ডারের জন্য
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,17 +83,19 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_cdn',
 ]
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Whitenoise Storage (রেন্ডারে CSS দেখানোর জন্য এটি মাস্ট)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 
+# Cloudinary Settings
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dyf7it7nb',
     'API_KEY': '429592126147549',
-    'API_SECRET': 'CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@dyf7it7nb eta?',
+    'API_SECRET': '9s8n7l3m5v6w1x2y3z4a5b6c7d8e9f0g1h2i3j4k5l6m7n8o9p0q1r2s3t4u5v6w7x8y9z0',
 }
 
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 

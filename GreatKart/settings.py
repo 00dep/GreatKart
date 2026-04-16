@@ -92,7 +92,7 @@ WHITENOISE_MANIFEST_STRICT = False
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dyf7it7nb',
     'API_KEY': '429592126147549',
-    'API_SECRET': 'cloudinary://<your_api_key>:<your_api_secret>@dyf7it7nb  eta?',
+    'API_SECRET': '@dyf7it7nb',
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

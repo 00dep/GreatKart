@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-ujbea9-6)$n+0zk7w$*y54c5dkp_z$j@vkw$wzsnjq_)(%*wg*'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['greatkart-hld2.onrender.com', 'localhost', '127.0.0.1']
 
@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'category',
     'accounts',
     'store',
@@ -24,7 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,8 +87,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 
+# Cloudinary Settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'তোমার_cloud_name',
+    'API_KEY': 'তোমার_api_key',
+    'API_SECRET': 'তোমার_api_secret',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'accounts.Account'
 LOGIN_URL = 'accounts_login'

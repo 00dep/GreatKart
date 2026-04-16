@@ -15,9 +15,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
-    'cloudinary',
+    # 'cloudinary',
     'category',
     'accounts',
     'store',
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ এই line uncomment করো
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,18 +83,17 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_cdn',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 
-# Cloudinary Settings
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'তোমার_cloud_name',
-    'API_KEY': 'তোমার_api_key',
-    'API_SECRET': 'তোমার_api_secret',
+    'CLOUD_NAME': 'dyf7it7nb',
+    'API_KEY': '429592126147549',
+    'API_SECRET': 'CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@dyf7it7nb eta?',
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 

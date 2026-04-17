@@ -7,7 +7,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     price = models.IntegerField()
     description = models.TextField(max_length=500, blank=True)
-    image = models.ImageField(upload_to='photos/products')
+    image = models.ImageField(upload_to='photos/products', blank=True)
     stock = models.IntegerField()
     is_available = models.BooleanField(default=True)
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
@@ -120,4 +120,3 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.payment_id
-

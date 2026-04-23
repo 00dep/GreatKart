@@ -79,7 +79,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_DIRS = [\n    BASE_DIR / 'static_cdn',\n]\n\n# Django 4.2+ compatibility for cloudinary-storage\nSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\nWHITENOISE_USE_FINDERS = True\nWHITENOISE_MANIFEST_STRICT = False
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_cdn',
+]
+
+# Django 4.2+ compatibility for cloudinary-storage
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
 
 STORAGES = {
     "default": {

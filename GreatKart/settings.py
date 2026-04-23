@@ -88,12 +88,13 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
 
-# Compatibility for cloudinary_storage
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# Compatibility for cloudinary_storage + loose whitenoise
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 
 # Cloudinary Settings
 CLOUDINARY_STORAGE = {
